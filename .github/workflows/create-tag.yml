@@ -5,8 +5,8 @@ on:
       - 'main'
 
 jobs:
-  cache:
-    name: "Warm up NPM cache"
+  create-tag:
+    name: "Create Tag"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
