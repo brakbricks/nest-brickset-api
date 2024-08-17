@@ -35,7 +35,7 @@ jobs:
         if: steps.check.outputs.changed == 'true'
       - run: npm run build 
         if: steps.check.outputs.changed == 'true'
-      - run: zip nest-bricknet-api.v${{steps.check.outputs.version}}.zip ./dist/* -r
+      - run: zip nest-brickset-api.v${{steps.check.outputs.version}}.zip ./dist/* -r
         if: steps.check.outputs.changed == 'true'
       - name: Create Release
         if: steps.check.outputs.changed == 'true'
