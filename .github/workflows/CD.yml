@@ -5,17 +5,19 @@ on:
       - 'main'
 
 jobs:
-  check-version:
-    uses: EndBug/version-check@v2
-    with:
-      file-url: https://unpkg.com/@brakbricks/nest-brickset-api@latest/package.json
-      static-checking: localIsNew
-
   cache:
-    if: steps.check-version.outputs.changed == 'true'
     name: "Warm up NPM cache"
     runs-on: ubuntu-latest
     steps:
+      - uses: EndBug/version-check@v2
+        id: check
+        with:
+          file-url: https://unpkg.com/@brakbricks/nest-brickset-api@latest/package.json
+          static-checking: localIsNew
+      - name: "Fail job when no change"
+        if: steps.check.outputs.changed == 'false'
+        run:
+          exit 1
       - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -23,6 +25,11 @@ jobs:
           node-version: '22.x'
           cache: 'npm'
       - run: npm ci
+      - name: Upload node modules artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
   lint:
     needs: cache
@@ -34,8 +41,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-          cache: 'npm'
-      - run: npm ci
+      - name: Download node modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules    
       - run: npm run lint
 
   test:
@@ -48,8 +57,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-          cache: 'npm'
-      - run: npm ci
+      - name: Download node modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules    
       - run: npm run test
 
   build:
@@ -64,13 +75,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-          cache: 'npm'
-      - run: npm ci
+      - name: Download node modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules   
       - run: npm run build
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
   
   create-github-release:
     needs: build
-    name: "Create github release"
+    name: "Create tag"
     runs-on: ubuntu-latest
     steps:
       - name: Bump version and push tag
@@ -80,7 +98,7 @@ jobs:
           github_token: ${{ env.github-token }}
           tag: v${{ steps.check-version.outputs.version }}
           release_branches: main
-          
+
 
 
   
