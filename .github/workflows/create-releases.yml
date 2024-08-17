@@ -33,7 +33,7 @@ jobs:
   publish-to-npm:
     needs: build
     name: Publish to NPM
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -54,7 +54,7 @@ jobs:
   publish-to-github:
     needs: build
     name: Publish to GitHub
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
