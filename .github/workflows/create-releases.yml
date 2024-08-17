@@ -3,7 +3,9 @@ name: Build and publish
 permissions:
   packages: write
   contents: write
-
+  pages: write
+  id-token: write
+  
 on:
   push:
     tags:
