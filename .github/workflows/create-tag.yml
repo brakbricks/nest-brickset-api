@@ -4,6 +4,12 @@ on:
     branches: 
       - 'main'
 
+permissions:
+  packages: write
+  contents: write
+  pages: write
+  id-token: write
+  
 jobs:
   create-tag:
     name: "Create Tag"
@@ -29,7 +35,7 @@ jobs:
         if: steps.check.outputs.changed == 'true'
       - name: Create Tag
         if: steps.check.outputs.changed == 'true'
-        uses: tvdias/github-tagger@v0.0.1
+        uses: tvdias/github-tagger
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           tag: "v${{steps.check.outputs.version}}"
