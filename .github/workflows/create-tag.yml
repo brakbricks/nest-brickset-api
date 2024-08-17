@@ -27,14 +27,12 @@ jobs:
         if: steps.check.outputs.changed == 'true'
       - run: npm run test 
         if: steps.check.outputs.changed == 'true'
-      - name: Create tag
+      - name: Create Tag
         if: steps.check.outputs.changed == 'true'
-        uses: laputansoft/github-tag-action@v4.6
+        uses: tvdias/github-tagger@v0.0.1
         with:
-          default_bump: false
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: v${{ steps.check.outputs.version }}
-          release_branches: main
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          tag: "v${{steps.check.outputs.version}}"
 
 
 
