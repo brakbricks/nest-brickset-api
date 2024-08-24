@@ -1,6 +1,6 @@
 {
   "name": "@brakbricks/nest-brickset-api",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "A simple NestJS module wrapping @brakbricks/brickset-api",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
