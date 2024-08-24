@@ -1,6 +1,6 @@
 {
   "name": "@brakbricks/nest-brickset-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple NestJS module wrapping @brakbricks/brickset-api",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -39,7 +39,7 @@
     "typescript-eslint": "^8.1.0"
   },
   "dependencies": {
-    "@brakbricks/brickset-api": "^0.0.5"
+    "@brakbricks/brickset-api": "^0.1.0"
   },
   "peerDependencies": {
     "@nestjs/common": "^10.4.1"
